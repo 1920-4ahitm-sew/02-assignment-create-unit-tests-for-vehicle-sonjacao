@@ -39,4 +39,12 @@ public class VehicleEndpointIT {
         String payload = response.readEntity(String.class);
         System.out.println("payload = " + payload);
     }
+
+    @Test
+    public void fetchVehicle3() {
+        Response response = this.target.request(MediaType.APPLICATION_XML).get();
+        assertThat(response.getStatus(), is(200));
+        String payload = response.readEntity(String.class);
+        System.out.println("payload = " + payload);
+    }
 }

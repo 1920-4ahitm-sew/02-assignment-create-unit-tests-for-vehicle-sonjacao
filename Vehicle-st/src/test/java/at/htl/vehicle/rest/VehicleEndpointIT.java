@@ -4,6 +4,8 @@ package at.htl.vehicle.rest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -36,8 +38,12 @@ public class VehicleEndpointIT {
     public void fetchVehicle2() {
         Response response = this.target.request(MediaType.APPLICATION_JSON).get();
         assertThat(response.getStatus(), is(200));
-        String payload = response.readEntity(String.class);
+        JsonArray payload = response.readEntity(JsonArray.class);
         System.out.println("payload = " + payload);
+
+        JsonObject vehicle = payload.getJsonObject(0);
+        assertThat(vehicle.getString("brand"), is("Opel 42"));
+        assertThat(vehicle.getString("type"), is("Commodore"));
     }
 
     @Test
